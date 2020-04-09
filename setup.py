@@ -2,7 +2,7 @@
 
 from setuptools import setup, find_packages
 
-with open('REAMDE.md') as f:
+with open('README.md') as f:
     readme = f.read()
 
 
@@ -20,7 +20,7 @@ setup(name='arts_tools',
       entry_points={'console_scripts': ['arts_fix_fits=arts_tools.fits.fix_file:main']},
       classifiers=['License :: OSI Approved :: Apache Software License',
                    'Programming Language :: Python :: 3',
-                   'Operating System :: OS Independent']
+                   'Operating System :: OS Independent'],
       python_requires='>=3.6'
      )
 
