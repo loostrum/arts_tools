@@ -99,13 +99,15 @@ def get_data(fname, hdr_size):
 
 def fix_header(header, naxis2, force=False):
     """
-    Fix the header: replace NAXIS2 = 0 by correct value
+    Fix the header: replace NAXIS2 = 0 by correct value and replaces
+    data column bits by bytes
 
     :param str header: full header, including padding, as single string
     :param int naxis2: new NAXIS2 value
     :param bool force: Overwrite NAXIS2 even if original value was not zero
     :return: fixed header (bytes)
     """
+    # NAXIS2 fix
     # exact key we are looking for in header
     key = "NAXIS2  ="
     try:
@@ -138,9 +140,16 @@ def fix_header(header, naxis2, force=False):
     new_line = key + ' ' * nspace_new + str(naxis2)
     # replace in header
     header_fixed = header.replace(old_line, new_line)
-
     logging.debug("Old header line: {}".format(old_line))
     logging.debug("New header line: {}".format(new_line))
+
+    # bit to bytes fix
+    # assume the old value is unique enough to appear anywhere else in the header
+    old_value = '{}X'.format(NSAMP * NCHAN)
+    # new value has one space to make length the same as old value
+    new_value = '{}B '.format(int((NCHAN * NSAMP) / 8))
+    logging.debug("Replacing {} by {} in header".format(old_value, new_value))
+    header_fixed = header_fixed.replace(old_value, new_value)
 
     return header_fixed.encode()
 
