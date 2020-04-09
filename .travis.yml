@@ -4,6 +4,7 @@ python:
     - "3.6"
     - "3.7"
 install:
+    - pip install pycodestyle
     - pip install .
 script:
     - pycodestyle --ignore E501
