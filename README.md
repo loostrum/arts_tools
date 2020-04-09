@@ -1,5 +1,5 @@
 # ARTS tools
-[![Build Status](https://travis-ci.com/loostrum/arts_tools.svg?branch=master)](https://travis-ci.com/loostrum/arts_tools)
+[![Build Status](https://travis-ci.com/loostrum/arts_tools.svg?branch=master)](https://travis-ci.com/loostrum/arts_tools)  
 Processing scripts for Apertif Radio Transient System data
 
 ## Fixing archival FITS files
