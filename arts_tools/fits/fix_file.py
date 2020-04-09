@@ -16,6 +16,8 @@ NAXIS1 = 30220
 NCHAN = 384
 #: Number of time samples per subint in original data
 NSAMP = 500
+#: Number of seconds per subint in original data
+TSUBINT = 1.024
 
 
 def get_header(fname):
@@ -62,13 +64,12 @@ def get_header(fname):
     return header, hdr_size
 
 
-def get_data(fname, hdr_size, tsubint):
+def get_data(fname, hdr_size):
     """
     Read raw data
 
     :param str fname: Path to fits file
     :param int hdr_size: Header size in bytes, aligned to fits block
-    :param float tsubint: Time interval per subint (seconds)
     :return: raw data (bytes), padding (bytes), derived naxis2 (int)
     """
 
@@ -91,7 +92,7 @@ def get_data(fname, hdr_size, tsubint):
 
     logging.info("Data size: {}  bytes with padding of {} bytes".format(data_size, padding_size))
     logging.info("NAXIS2: {}".format(naxis2))
-    logging.info("Observation duration: {}s".format(naxis2 * tsubint))
+    logging.info("Observation duration: {}s".format(naxis2 * TSUBINT))
 
     return data, padding, naxis2
 
@@ -214,8 +215,6 @@ def write_file(fname, *args):
 
 def main():
     parser = argparse.ArgumentParser(formatter_class=argparse.RawTextHelpFormatter)
-    parser.add_argument('--tsubint', type=float, default=1.024, help="Time per subint of input data "
-                                                                     "(Default: %(default)s)")
     parser.add_argument('--output', help="Output file "
                                          "(Default: input.fits -> input_fixed.fits)")
     parser.add_argument('--force', action='store_true', help="Apply fix even if FITS file seems good")
@@ -244,7 +243,7 @@ def main():
     # read the header
     header, hdr_size = get_header(args.file)
     # read the data
-    raw_data, padding, naxis2 = get_data(args.file, hdr_size, args.tsubint)
+    raw_data, padding, naxis2 = get_data(args.file, hdr_size)
     # fix the header
     header_fixed = fix_header(header, naxis2, args.force)
     # fix the data
