@@ -221,6 +221,11 @@ def main():
     parser.add_argument('--verbose', '-v', action='store_true', help="Increase verbosity")
     parser.add_argument('file', help="Path to input FITS file")
 
+    # print help if no arguments are given
+    if len(sys.argv) == 1:
+        parser.print_help()
+        sys.exit(1)
+
     args = parser.parse_args()
 
     # set log verbosity
