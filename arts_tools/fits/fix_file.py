@@ -210,7 +210,7 @@ def write_file(fname, *args):
     Write output file
 
     :param fname: path to output file
-    :param *args: byte array to write to file, usually header, data, and padding
+    :param args: byte array to write to file, usually header, data, and padding
     """
     try:
         with open(fname, 'wb') as f:
