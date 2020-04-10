@@ -12,7 +12,7 @@ def read_header(fname, hdu=None):
 
     :param str fname: Path to fits file
     :param int/str hdu: HDU to read header from (default: all)
-    :return: header (astropy.io.fits.header.Header) or 
+    :return: header (astropy.io.fits.header.Header) or
         list of headers if hdu is not specified
     """
     with fits.open(fname) as f:
