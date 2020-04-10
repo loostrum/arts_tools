@@ -1,0 +1,264 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>FITS file handling &#8212; ARTS tools 1.1 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Welcome to ARTS tools’s documentation!" href="../index.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="fits-file-handling">
+<h1>FITS file handling<a class="headerlink" href="#fits-file-handling" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-arts_tools.fits.reader">
+<span id="arts-tools-fits-reader"></span><h2>arts_tools.fits.reader<a class="headerlink" href="#module-arts_tools.fits.reader" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="arts_tools.fits.reader.read_header">
+<code class="sig-prename descclassname">arts_tools.fits.reader.</code><code class="sig-name descname">read_header</code><span class="sig-paren">(</span><em class="sig-param">fname</em>, <em class="sig-param">hdu=None</em><span class="sig-paren">)</span><a class="headerlink" href="#arts_tools.fits.reader.read_header" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read fits header</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fname</strong> (<em>str</em>) – Path to fits file</p></li>
+<li><p><strong>hdu</strong> (<em>int/str</em>) – HDU to read header from (default: all)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>header (astropy.io.fits.header.Header) or</p>
+</dd>
+</dl>
+<p>list of headers if hdu is not specified</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="arts_tools.fits.reader.read_parameterset">
+<code class="sig-prename descclassname">arts_tools.fits.reader.</code><code class="sig-name descname">read_parameterset</code><span class="sig-paren">(</span><em class="sig-param">fname</em><span class="sig-paren">)</span><a class="headerlink" href="#arts_tools.fits.reader.read_parameterset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read observation parameterset from fits file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>fname</strong> (<em>str</em>) – Path to fits file</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>parameterset (dict)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-arts_tools.fits.fix_file">
+<span id="arts-tools-fits-fix-file"></span><h2>arts_tools.fits.fix_file<a class="headerlink" href="#module-arts_tools.fits.fix_file" title="Permalink to this headline">¶</a></h2>
+<dl class="data">
+<dt id="arts_tools.fits.fix_file.ALIGN">
+<code class="sig-prename descclassname">arts_tools.fits.fix_file.</code><code class="sig-name descname">ALIGN</code><em class="property"> = 2880</em><a class="headerlink" href="#arts_tools.fits.fix_file.ALIGN" title="Permalink to this definition">¶</a></dt>
+<dd><p>fits file alignment block size in bytes</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="arts_tools.fits.fix_file.NAXIS1">
+<code class="sig-prename descclassname">arts_tools.fits.fix_file.</code><code class="sig-name descname">NAXIS1</code><em class="property"> = 30220</em><a class="headerlink" href="#arts_tools.fits.fix_file.NAXIS1" title="Permalink to this definition">¶</a></dt>
+<dd><p>NAXIS1 in original data</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="arts_tools.fits.fix_file.NCHAN">
+<code class="sig-prename descclassname">arts_tools.fits.fix_file.</code><code class="sig-name descname">NCHAN</code><em class="property"> = 384</em><a class="headerlink" href="#arts_tools.fits.fix_file.NCHAN" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of frequency channels in original data</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="arts_tools.fits.fix_file.NSAMP">
+<code class="sig-prename descclassname">arts_tools.fits.fix_file.</code><code class="sig-name descname">NSAMP</code><em class="property"> = 500</em><a class="headerlink" href="#arts_tools.fits.fix_file.NSAMP" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of time samples per subint in original data</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="arts_tools.fits.fix_file.TSUBINT">
+<code class="sig-prename descclassname">arts_tools.fits.fix_file.</code><code class="sig-name descname">TSUBINT</code><em class="property"> = 1.024</em><a class="headerlink" href="#arts_tools.fits.fix_file.TSUBINT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of seconds per subint in original data</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="arts_tools.fits.fix_file.fix_data">
+<code class="sig-prename descclassname">arts_tools.fits.fix_file.</code><code class="sig-name descname">fix_data</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">naxis2</em><span class="sig-paren">)</span><a class="headerlink" href="#arts_tools.fits.fix_file.fix_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fix the data: Swap time and frequency axis, reverse frequency ordering</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>bytes</em>) – raw data, without padding</p></li>
+<li><p><strong>naxis2</strong> (<em>int</em>) – NAXIS2 value</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>fixed data (bytes)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="arts_tools.fits.fix_file.fix_header">
+<code class="sig-prename descclassname">arts_tools.fits.fix_file.</code><code class="sig-name descname">fix_header</code><span class="sig-paren">(</span><em class="sig-param">header</em>, <em class="sig-param">naxis2</em>, <em class="sig-param">force=False</em><span class="sig-paren">)</span><a class="headerlink" href="#arts_tools.fits.fix_file.fix_header" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fix the header: replace NAXIS2 = 0 by correct value and replaces
+data column bits by bytes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>header</strong> (<em>str</em>) – full header, including padding, as single string</p></li>
+<li><p><strong>naxis2</strong> (<em>int</em>) – new NAXIS2 value</p></li>
+<li><p><strong>force</strong> (<em>bool</em>) – Overwrite NAXIS2 even if original value was not zero</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>fixed header (bytes)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="arts_tools.fits.fix_file.get_data">
+<code class="sig-prename descclassname">arts_tools.fits.fix_file.</code><code class="sig-name descname">get_data</code><span class="sig-paren">(</span><em class="sig-param">fname</em>, <em class="sig-param">hdr_size</em><span class="sig-paren">)</span><a class="headerlink" href="#arts_tools.fits.fix_file.get_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read raw data</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fname</strong> (<em>str</em>) – Path to fits file</p></li>
+<li><p><strong>hdr_size</strong> (<em>int</em>) – Header size in bytes, aligned to fits block</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>raw data (bytes), padding (bytes), derived naxis2 (int)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="arts_tools.fits.fix_file.get_header">
+<code class="sig-prename descclassname">arts_tools.fits.fix_file.</code><code class="sig-name descname">get_header</code><span class="sig-paren">(</span><em class="sig-param">fname</em><span class="sig-paren">)</span><a class="headerlink" href="#arts_tools.fits.fix_file.get_header" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read header from fits file, assuming there are 2 HDUs</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>fname</strong> (<em>str</em>) – Path to fits file</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>raw header (bytes), header size in bytes (int)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="arts_tools.fits.fix_file.main">
+<code class="sig-prename descclassname">arts_tools.fits.fix_file.</code><code class="sig-name descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#arts_tools.fits.fix_file.main" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="arts_tools.fits.fix_file.write_file">
+<code class="sig-prename descclassname">arts_tools.fits.fix_file.</code><code class="sig-name descname">write_file</code><span class="sig-paren">(</span><em class="sig-param">fname</em>, <em class="sig-param">*args</em><span class="sig-paren">)</span><a class="headerlink" href="#arts_tools.fits.fix_file.write_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write output file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fname</strong> – path to output file</p></li>
+<li><p><strong>*args</strong> – <p>byte array to write to file, usually header, data, and padding</p>
+</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">ARTS tools</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">FITS file handling</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-arts_tools.fits.reader">arts_tools.fits.reader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-arts_tools.fits.fix_file">arts_tools.fits.fix_file</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="../index.html" title="previous chapter">Welcome to ARTS tools’s documentation!</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Leon Oostrum.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/_modules/fits.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
