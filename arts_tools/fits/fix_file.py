@@ -223,7 +223,8 @@ def write_file(fname, *args):
 
 
 def main():
-    parser = argparse.ArgumentParser(formatter_class=argparse.RawTextHelpFormatter)
+    parser = argparse.ArgumentParser(formatter_class=argparse.RawTextHelpFormatter,
+                                     description="Repair ARTS 1-bit FITS files")
     parser.add_argument('--output', help="Output file "
                                          "(Default: input.fits -> input_fixed.fits)")
     parser.add_argument('--force', action='store_true', help="Apply fix even if FITS file seems good")

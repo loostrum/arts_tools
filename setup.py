@@ -1,13 +1,16 @@
 #!/usr/bin/env python
 
+import glob
 from setuptools import setup, find_packages
 
 with open('README.md') as f:
     readme = f.read()
 
+scripts = glob.glob('bin/*')
+
 
 setup(name='arts_tools',
-      version='1.0',
+      version='1.1',
       description='Tools to read or process ARTS data',
       long_description=readme,
       long_description_content_type="text/markdown",
@@ -16,8 +19,10 @@ setup(name='arts_tools',
       author_email='oostrum@astron.nl',
       license='Apache2.0',
       packages=find_packages(),
-      install_requires=['numpy>=1.17'],
+      install_requires=['numpy>=1.17',
+                        'astropy'],
       entry_points={'console_scripts': ['arts_fix_fits=arts_tools.fits.fix_file:main']},
+      scripts=scripts,
       classifiers=['License :: OSI Approved :: Apache Software License',
                    'Programming Language :: Python :: 3',
                    'Operating System :: OS Independent'],
