@@ -47,10 +47,10 @@
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>header (astropy.io.fits.header.Header) or</p>
+<dd class="field-even"><p>header (astropy.io.fits.header.Header) or 
+list of headers if hdu is not specified</p>
 </dd>
 </dl>
-<p>list of headers if hdu is not specified</p>
 </dd></dl>
 
 <dl class="function">
@@ -180,8 +180,7 @@ data column bits by bytes</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>fname</strong> – path to output file</p></li>
-<li><p><strong>*args</strong> – <p>byte array to write to file, usually header, data, and padding</p>
-</p></li>
+<li><p><strong>args</strong> – byte array to write to file, usually header, data, and padding</p></li>
 </ul>
 </dd>
 </dl>
