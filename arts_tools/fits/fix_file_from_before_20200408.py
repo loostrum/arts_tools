@@ -144,9 +144,9 @@ def fix_header(header, naxis2, force=False):
     logging.debug("New header line: {}".format(new_line))
 
     # bit to bytes fix
-    # assume the old value is unique enough to appear anywhere else in the header
+    # assume the old value is unique enough to not appear anywhere else in the header
     old_value = '{}X'.format(NSAMP * NCHAN)
-    # new value has one space to make length the same as old value
+    # new value has a space at the end to make length the same as old value
     new_value = '{}B '.format(int((NCHAN * NSAMP) / 8))
     logging.debug("Replacing {} by {} in header".format(old_value, new_value))
     header_fixed = header_fixed.replace(old_value, new_value)
@@ -224,7 +224,14 @@ def write_file(fname, *args):
 
 def main():
     parser = argparse.ArgumentParser(formatter_class=argparse.RawTextHelpFormatter,
-                                     description="Repair ARTS 1-bit FITS files")
+                                     description="Repair ARTS 1-bit FITS files. "
+                                     "These fixes are applied:\n"
+                                     "1. The NAXIS2 value in the header is changed from zero to the correct value\n"
+                                     "2. The data size is expressed in bytes instead of bits\n"
+                                     "3. The frequency and time axes of the data are swapped\n"
+                                     "4. The frequency order of the data and weights, scales, offsets, "
+                                     "and frequencies columns is flipped"
+                                     )
     parser.add_argument('--output', help="Output file "
                                          "(Default: input.fits -> input_fixed.fits)")
     parser.add_argument('--force', action='store_true', help="Apply fix even if FITS file seems good")
