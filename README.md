@@ -1,4 +1,5 @@
 # ARTS tools
+[![DOI](https://zenodo.org/badge/254329373.svg)](https://zenodo.org/badge/latestdoi/254329373)
 [![Build Status](https://travis-ci.com/loostrum/arts_tools.svg?branch=master)](https://travis-ci.com/loostrum/arts_tools)  
 Processing scripts for Apertif Radio Transient System data
 
