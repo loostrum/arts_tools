@@ -39,7 +39,7 @@ def read_parameterset(fname):
     # also convert to string
     parset = decode(decode(raw_parset, 'hex'), 'bz2').decode()
     # key/value pairs my be separated by ' = ' or '='
-    parset.replace(' = ', '-')
+    parset.replace(' = ', '=')
     # convert to dict
     parset_dict = {}
     for line in parset.split('\n'):
