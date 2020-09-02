@@ -125,11 +125,17 @@ def fix_header(header, naxis2, force=False):
     if char != '0':
         if force:
             logging.warning("Original NAXIS2 is not zero; forcing application of fix")
+            # keep reading until the end of the value is found, indicated by a space
+            while char != ' ':
+                ind += 1
+                char = header[ind]
+            # subtract one to have value of final character
+            char -= 1
         else:
             logging.error("Original NAXIS2 is not zero, fits file should be ok already"
                           "Re-run with --force to apply the fix anyway")
             sys.exit(1)
-    # ind is now the location of the zero in the header
+    # ind is now the location of the last character of the value in the header
     # extract the old header line including key and value
     old_line = header[key_ind:ind + 1]
     # find the number of padding spaces between key and value
