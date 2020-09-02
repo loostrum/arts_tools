@@ -8,9 +8,13 @@ with open('README.md') as f:
 
 scripts = glob.glob('bin/*')
 
+with open(os.path.join('arts_localisation', '__version__.py')) as version_file:
+    version = {}
+    exec(version_file.read(), version)
+    project_version = version['__version__']
 
 setup(name='arts_tools',
-      version='1.1',
+      version=project_version,
       description='Tools to read or process ARTS data',
       long_description=readme,
       long_description_content_type="text/markdown",
