@@ -1,2 +1,1 @@
-from arts_localisation.__version__ import __version__
-
+from arts_tools.__version__ import __version__

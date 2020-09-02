@@ -9,7 +9,7 @@ with open('README.md') as f:
 
 scripts = glob.glob('bin/*')
 
-with open(os.path.join('arts_localisation', '__version__.py')) as version_file:
+with open(os.path.join('arts_tools', '__version__.py')) as version_file:
     version = {}
     exec(version_file.read(), version)
     project_version = version['__version__']
