@@ -130,7 +130,7 @@ def fix_header(header, naxis2, force=False):
                 ind += 1
                 char = header[ind]
             # subtract one to have value of final character
-            char -= 1
+            ind -= 1
         else:
             logging.error("Original NAXIS2 is not zero, fits file should be ok already"
                           "Re-run with --force to apply the fix anyway")
