@@ -4,12 +4,21 @@
 Processing scripts for Apertif Radio Transient System data
 
 ## Requirements
-* Python >= 3.6
-* Numpy >= 1.17
-* Astropy
+* python >= 3.6
+* numpy >= 1.17
+* astropy
+* psrqpy
 
 ## Installation
 `pip install arts_tools`
+
+## Finding known pulsars in the Apertif field-of-view
+To find which pulsars are within the field of a given pointing, run 
+`arts_find_pulsars_in_field --ra hh:mm:ss.s --dec dd:mm:ss.s`. This tool also prints in which 
+compound beam the pulsars should be, so you only need to download those CBs from the archive instead of the
+entire observation. \
+To convert the tied-array beam data, which have frequency-and time-dependent pointing,
+to a beam tracking a single point on the sky, use [arts_tracking_beams](https://github.com/loostrum/arts_tracking_beams). 
 
 ## Fixing archival FITS files
 FITS files retrieved from the Apertif Long-Term Archive (ALTA) from before 2020/04/08 can be made readable with 
@@ -29,7 +38,7 @@ This can be forced by running `arts_fix_fits_from_before_20200408 --force file.f
 The FITS headers contain an encoded observation parameterset. To print the parameterset, use 
 `arts_read_parameterset file.fits`. It can also be loaded in python as a dictionary with:
 ```python
-from arts_tools.fits.reader import read_parameterset
+from arts_tools import read_parameterset
 parset = read_parameterset('/path/to/file.fits')
 ```
 Note that all values are read as strings.
