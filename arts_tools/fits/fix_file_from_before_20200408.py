@@ -238,8 +238,11 @@ def main():
                                      "4. The frequency order of the data and weights, scales, offsets, "
                                      "and frequencies columns is flipped"
                                      )
-    parser.add_argument('--output', help="Output file "
-                                         "(Default: input.fits -> input_fixed.fits)")
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument('--output', help="Output file "
+                                        "(Default: input.fits -> input_fixed.fits)")
+    group.add_argument('--inplace', action='store_true', help="Fix input FITS file in-place")
+
     parser.add_argument('--force', action='store_true', help="Apply fix even if FITS file seems good")
     parser.add_argument('--verbose', '-v', action='store_true', help="Increase verbosity")
     parser.add_argument('file', help="Path to input FITS file")
@@ -259,7 +262,9 @@ def main():
     logging.basicConfig(format='%(asctime)s: %(message)s', level=logging_level, stream=sys.stderr)
 
     # set output file name
-    if args.output is None:
+    if args.inplace:
+        args.output = args.file
+    elif args.output is None:
         args.output = args.file.replace('.fits', '_fixed.fits')
 
     # Verify fits file exists
