@@ -21,8 +21,15 @@ jobs:
         - make -C docs/ html
         - touch docs/_build/html/.nojekyll
       deploy:
-        provider: pages:git
-        verbose: true
-        token: "$GITHUB_TOKEN"
-        edge: true
-        local_dir: "./docs/_build/html"
+        - provider: pages:git
+          verbose: true
+          token: "$GITHUB_TOKEN"
+          edge: true
+          local_dir: "./docs/_build/html"
+        - provider: pypi
+          username: __token__
+          password: "$PYPI_TOKEN"
+          on:
+            branch: master
+            tags: true
+        
