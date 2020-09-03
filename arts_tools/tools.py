@@ -1,14 +1,13 @@
 #!/usr/bin/env python3
 
 import os
-import errno
 
 import numpy as np
 import astropy.units as u
 from astropy.coordinates import SkyCoord, SphericalRepresentation
 from astropy.time import Time
 
-from arts_tools.constants import WSRT_LON, WSRT_LAT, NCB, CB_OFFSETS
+from arts_tools.constants import WSRT_LOC, NCB, CB_OFFSETS
 
 
 def limit(val, minval=-1, maxval=1):
@@ -31,7 +30,7 @@ def limit(val, minval=-1, maxval=1):
     return val
 
 
-def radec_to_hadec(ra, dec, t, lon=WSRT_LON):
+def radec_to_hadec(ra, dec, t, lon=WSRT_LOC.lon):
     """
     Convert J2000 RA, Dec to apparent HA, Dec
 
@@ -54,7 +53,7 @@ def radec_to_hadec(ra, dec, t, lon=WSRT_LON):
     return ha, dec
 
 
-def hadec_to_radec(ha, dec, t, lon=WSRT_LON):
+def hadec_to_radec(ha, dec, t, lon=WSRT_LOC.lat):
     """
     Convert apparent HA, Dec to J2000 RA, Dec
 
@@ -77,7 +76,7 @@ def hadec_to_radec(ha, dec, t, lon=WSRT_LON):
     return coord.icrs
 
 
-def hadec_to_par(ha, dec, lat=WSRT_LAT):
+def hadec_to_par(ha, dec, lat=WSRT_LOC.lat):
     """
     Convert HA, Dec to parallactic angle
 
@@ -92,7 +91,7 @@ def hadec_to_par(ha, dec, lat=WSRT_LAT):
     return theta_par.to(u.deg)
 
 
-def hadec_to_proj(ha, dec, lat=WSRT_LAT):
+def hadec_to_proj(ha, dec, lat=WSRT_LOC.lat):
     """
     Convert HA, Dec to E-W baseline projection angle
 
@@ -109,7 +108,7 @@ def hadec_to_proj(ha, dec, lat=WSRT_LAT):
     return theta_proj.to(u.deg)
 
 
-def hadec_to_altaz(ha, dec, lat=WSRT_LAT):
+def hadec_to_altaz(ha, dec, lat=WSRT_LOC.lat):
     """
     Convert HA, Dec to Alt, Az
 
@@ -136,7 +135,7 @@ def hadec_to_altaz(ha, dec, lat=WSRT_LAT):
     return alt.to(u.deg), az.to(u.deg)
 
 
-def altaz_to_hadec(alt, az, lat=WSRT_LAT):
+def altaz_to_hadec(alt, az, lat=WSRT_LOC.lat):
     """
     Convert Alt, Az to HA, Dec
 
