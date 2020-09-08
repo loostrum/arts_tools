@@ -16,6 +16,8 @@ REF_FREQ = 1770 * u.MHz  # for then it matches the measured width at 1420
 BANDWIDTH = 300 * u.MHz
 #: Number of compound beams
 NCB = 40
+#: Number of tied-array beams
+NTAB = 12
 
 # WSRT position in ITRF coordinates
 ARRAY_ITRF = np.array([3828630.63486200943589211, 443593.39226634375518188, 5064922.99755000043660402]) * u.meter
