@@ -89,7 +89,3 @@ def main():
             download_url(f, args.output_folder, verbose=args.verbose)
         else:
             raise ValueError(f"Unknown release: {args.release}; valid options are SVC, internal")
-
-
-if __name__ == "__main__":
-    main()
