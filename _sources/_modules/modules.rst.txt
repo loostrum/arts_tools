@@ -5,6 +5,17 @@ arts_tools.pulsars.find_pulsars
 -------------------------------
 .. automodule:: arts_tools.pulsars.find_pulsars
 
+ALTA downloads
+==============
+
+arts_tools.archive.download_from_alta
+-------------------------------------
+.. automodule:: arts_tools.archive.download_from_alta
+
+arts_tools.archive.download_helpers
+-----------------------------------
+.. automodule:: arts_tools.archive.download_helpers
+
 FITS file handling
 ==================
 
