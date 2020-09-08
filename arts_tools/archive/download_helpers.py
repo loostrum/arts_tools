@@ -2,8 +2,17 @@
 
 import os
 import urllib
+import ssl
 
 import numpy as np
+
+try:
+    from irods.session import iRODSSession
+    from irods.exception import DataObjectDoesNotExist
+    from irods.keywords import FORCE_FLAG_KW
+    have_irods = True
+except ImportError:
+    have_irods = False
 
 
 # to keep track of printing download progress
@@ -59,27 +68,35 @@ def print_progress(nblock, nbyte_per_block, nbyte_total, step=5):
 
         print(f"{done_scaled:.0f} {done_unit} / {total_scaled:.0f} {total_unit} ({percent_done:.0f}%)")
         last_percent_printed = percent_done
-
     return
 
 
-def download_url(url, output_folder=None, verbose=False):
+def download_url(url, output_folder=None, overwrite=False, verbose=False):
     """
-    Download file at given url using
+    Download file from given url
+
     :param url: URL to download file from
     :param str output_folder: Output folder (Default: current directory)
+    :param bool overwrite: Overwrite output file if it already exists
     :param bool verbose: Print download progress
     """
-    # get full path to output file
-    if output_folder is not None:
-        output_file = os.path.join(output_folder, os.path.basename(url))
-    else:
-        output_file = os.path.basename(url)
+    # create output folder and get full path to output file
+    if output_folder is None:
+        output_folder = os.getcwd()
+    os.makedirs(output_folder, exist_ok=True)
+    output_file = os.path.join(output_folder, os.path.basename(url))
+
+    # check if the file already exists
+    if os.path.isfile(output_file) and not overwrite:
+        print(f"File already exists: {output_file}")
+        return
+
     # set report hook if verbose output
     if verbose:
         hook = print_progress
     else:
         hook = None
+
     # download the file
     try:
         urllib.request.urlretrieve(url, filename=output_file, reporthook=hook)
@@ -90,10 +107,51 @@ def download_url(url, output_folder=None, verbose=False):
     return
 
 
-def download_irods(path, output_folder=None):
+def download_irods(path, output_folder=None, overwrite=False):
     """
-    Download file
+    Download file from ALTA using iRODS
+
     :param path: Path to file on iRODS server
     :param str output_folder: Output folder (Default: current directory)
+    :param bool overwrite: Overwrite output file if it already exists
     """
-    raise NotImplementedError("iRODS download not available")
+    # check if iRODS tools are available
+    if not have_irods:
+        print("iRODS tools not available; reinstall arts_tools "
+              "with pip install --upgrade arts_tools[irods]")
+        return
+
+    # get the irods environment file
+    try:
+        env_file = os.environ['IRODS_ENVIRONMENT_FILE']
+    except KeyError:
+        env_file = os.path.expanduser('~/.irods/irods_environment.json')
+    if not os.path.isfile(env_file):
+        print("iRODS environment file not found. Set IRODS_ENVIRONMENT_FILE if the file is not in the default "
+              "location. Also make sure your iRODS environment is set up properly (with iinit)")
+        return
+
+    # create output folder and get full path to output file
+    if output_folder is None:
+        output_folder = os.getcwd()
+    os.makedirs(output_folder, exist_ok=True)
+    output_file = os.path.join(output_folder, os.path.basename(path))
+
+    # check if the file already exists
+    if os.path.isfile(output_file) and not overwrite:
+        print(f"File already exists: {output_file}")
+        return
+    if overwrite:
+        download_options = {FORCE_FLAG_KW: ''}
+    else:
+        download_options = {}
+
+    # create SSL context
+    ssl_context = ssl.create_default_context(purpose=ssl.Purpose.SERVER_AUTH, cafile=None, capath=None, cadata=None)
+    # open an iRODS session
+    with iRODSSession(irods_env_file=env_file, ssl_context=ssl_context) as session:
+        try:
+            session.data_objects.get(path, output_folder, **download_options)
+        except DataObjectDoesNotExist:
+            # add filename to error message
+            raise DataObjectDoesNotExist(f"File not found: {path}")

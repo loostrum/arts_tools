@@ -19,10 +19,10 @@ def get_file_paths(release, taskid, cbs, tabs):
     :return: list of file paths
     """
     # set prefix
-    if release == 'internal':
-        prefix = '/altaZone/archive/arts_main/arts_sc4'
-    elif release == 'SVC':
-        prefix = 'https://alta.astron.nl/webdav/SVC_2019_TimeDomain'
+    if release == "internal":
+        prefix = "/altaZone/archive/arts_main/arts_sc4"
+    elif release == "SVC":
+        prefix = "https://alta.astron.nl/webdav/SVC_2019_TimeDomain"
     else:
         raise ValueError(f"Unknown release: {release}; valid options are SVC, internal")
 
@@ -32,7 +32,7 @@ def get_file_paths(release, taskid, cbs, tabs):
 
 
 def main():
-    data_releases = ['SVC', 'internal']
+    data_releases = ["SVC", "internal"]
 
     parser = argparse.ArgumentParser(formatter_class=argparse.RawTextHelpFormatter,
                                      description="Download files of an observation from ALTA.\n"
@@ -45,9 +45,9 @@ def main():
                              "Set to 'internal' to download non-released files (requires iRODS access to ALTA)")
     parser.add_argument("--taskid", required=True,
                         help="Task ID of observation (yymmddnnn)")
-    parser.add_argument("--cbs", type=int, required=True, nargs='+',
+    parser.add_argument("--cbs", type=int, required=True, nargs="+",
                         help="Space-separated list of CBs to download")
-    parser.add_argument("--tabs", type=int, nargs='+',
+    parser.add_argument("--tabs", type=int, nargs="+",
                         help="Space-separated list of TABs to download (Default: all)")
     parser.add_argument("--output_folder", default=os.getcwd(),
                         help="Folder to download files to (Default: current directory)")
@@ -81,15 +81,15 @@ def main():
 
     # download the files
     for f in files:
-        print(f)
+        print(f"Will download {os.path.basename(f)}")
         # SVC data can be downloaded over http
-        if args.release == 'internal':
+        if args.release == "internal":
             download_irods(f, args.output_folder)
-        elif args.release == 'SVC':
+        elif args.release == "SVC":
             download_url(f, args.output_folder, verbose=args.verbose)
         else:
             raise ValueError(f"Unknown release: {args.release}; valid options are SVC, internal")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
