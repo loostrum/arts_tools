@@ -81,7 +81,9 @@ def main():
 
     # download the files
     for f in files:
-        print(f"Will download {os.path.basename(f)}")
+        if not args.verbose or args.release == "internal":
+            # print filename if not progress bar is added to the downloader
+            print(f"{os.path.basename(f)}")
         # SVC data can be downloaded over http
         if args.release == "internal":
             download_irods(f, args.output_folder)

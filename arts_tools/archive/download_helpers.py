@@ -5,6 +5,7 @@ import urllib
 import ssl
 
 import numpy as np
+import tqdm
 
 try:
     from irods.session import iRODSSession
@@ -19,6 +20,19 @@ except ImportError:
 last_percent_printed = None
 
 
+class DownloadProgressBar(tqdm.tqdm):
+    """
+    A progress bar for downloads using tqdm
+    based on https://stackoverflow.com/questions/15644964/python-progress-bar-and-downloads
+    """
+
+    def update_to(self, nbyte=1, blocksize=1, totalsize=None):
+        if totalsize is not None:
+            self.total = totalsize
+        self.update(nbyte * blocksize - self.n)
+
+
+# this function is no longer used but may be useful in the future
 def format_bytes(nbytes):
     """
     Format a number in bytes with a prefix
@@ -47,6 +61,7 @@ def format_bytes(nbytes):
     return nbytes / scaling, letter + 'B'
 
 
+# this function is no longer used but may be useful in the future
 def print_progress(nblock, nbyte_per_block, nbyte_total, step=5):
     """
     Print download progress of urllib.request.urlretrieve command
@@ -91,15 +106,14 @@ def download_url(url, output_folder=None, overwrite=False, verbose=False):
         print(f"File already exists: {output_file}")
         return
 
-    # set report hook if verbose output
-    if verbose:
-        hook = print_progress
-    else:
-        hook = None
-
     # download the file
     try:
-        urllib.request.urlretrieve(url, filename=output_file, reporthook=hook)
+        # with or without progress bar
+        if verbose:
+            with DownloadProgressBar(unit='B', unit_scale=True, miniters=1, desc=os.path.basename(url)) as progress_bar:
+                urllib.request.urlretrieve(url, filename=output_file, reporthook=progress_bar.update_to)
+        else:
+            urllib.request.urlretrieve(url, filename=output_file)
     except urllib.error.HTTPError as e:
         # add filename to error message
         e.msg = f"URL not found: {url}"
