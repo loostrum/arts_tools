@@ -1,5 +1,6 @@
 # ARTS tools
 [![DOI](https://zenodo.org/badge/254329373.svg)](https://zenodo.org/badge/latestdoi/254329373)
+[![PyPI version](https://badge.fury.io/py/arts-tools.svg)](https://badge.fury.io/py/arts-tools)
 [![Build Status](https://travis-ci.com/loostrum/arts_tools.svg?branch=master)](https://travis-ci.com/loostrum/arts_tools)  
 Scripts for handling Apertif Radio Transient System data.
 
