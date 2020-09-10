@@ -27,19 +27,27 @@ def get_half_power_width(freq):
 
 
 def main():
+    # default parameters to query
+    params = ["NAME", "BNAME", "RAJ", "DECJ", "DM", "P0", "S1400"]
+
     parser = argparse.ArgumentParser(formatter_class=argparse.RawTextHelpFormatter,
                                      description="For a given pointing, determine which pulsars are in the field and "
                                                  "in which compound beam they are.")
 
-    parser.add_argument('--ra', required=True, help="Right Ascension of pointing in hh:mm:ss.s format")
-    parser.add_argument('--dec', required=True, help="Declination of pointing in dd:mm:ss.s format")
-    parser.add_argument('--freq', type=float, default=1370,
+    parser.add_argument("--ra", required=True, help="Right Ascension of pointing in hh:mm:ss.s format")
+    parser.add_argument("--dec", required=True, help="Declination of pointing in dd:mm:ss.s format")
+    parser.add_argument("--freq", type=float, default=1370,
                         help="Observing frequency (MHz), used to determine size of compound beams. "
                              "Ignored if max_dist is used."
                              "(Default: %(default)s)")
-    parser.add_argument('--max_dist', type=float, help="Maximum distance from CB center (arcmin) to be considered "
+    parser.add_argument("--max_dist", type=float, help="Maximum distance from CB center (arcmin) to be considered "
                                                        "in the CB. (Default: twice half-power width)")
-    parser.add_argument('--more_info', action='store_true', help='Add pulsar parameters to output')
+    parser.add_argument("--condition", type=str, help="Search condition when querying psrcat, e.g. "
+                                                      "'S1400 > 1'")
+    parser.add_argument("--more_info", action="store_true", help="Add pulsar parameters to output")
+    parser.add_argument("--params", nargs="+", default=params,
+                        help=f"Space-separated list of pulsar parameters to show "
+                             f"when more_info=True. (Default: {' '.join(params)})")
 
     # print help if no arguments are given
     if len(sys.argv) == 1:
@@ -48,20 +56,22 @@ def main():
 
     args = parser.parse_args()
 
-    # pulsar parameters to query
-    params = ['NAME', 'RAJ', 'DECJ', 'DM', 'P0', 'S1400']
-
     # set max dist if not given
     if args.max_dist is None:
         args.max_dist = 2 * get_half_power_width(args.freq * u.MHz).to(u.arcmin).value
 
     # query ATNF for pulsars in a 4x4 degree FoV, which covers more than the entire Apertif FoV
     bound = [args.ra, args.dec, 4]
-    # for some reason the query gives a RuntimeWarning, suppress it
+    # params to query should always include NAME, RAJ and DECJ
+    query_params = args.params[:]
+    for key in ["NAME", "RAJ", "DECJ"]:
+        if key not in query_params:
+            query_params.append(key)
     print("Querying ATNF")
+    # for some reason the query gives a RuntimeWarning, suppress it
     with warnings.catch_warnings():
-        warnings.simplefilter('ignore', category=RuntimeWarning)
-        results = QueryATNF(params=params, circular_boundary=bound)
+        warnings.simplefilter("ignore", category=RuntimeWarning)
+        results = QueryATNF(params=query_params, circular_boundary=bound, condition=args.condition)
 
     if len(results) == 0:
         print("No pulsars found")
@@ -79,7 +89,7 @@ def main():
     pulsar_found = False
     print("Locating pulsars in Apertif Compound Beams")
     for psr in results.table:
-        psr_coord = SkyCoord(psr['RAJ'], psr['DECJ'], unit=(u.hourangle, u.deg))
+        psr_coord = SkyCoord(psr["RAJ"], psr["DECJ"], unit=(u.hourangle, u.deg))
         # get separation from each CB and find minimum
         separations = [psr_coord.separation(beam).to(u.arcmin).value for beam in cb_pointings]
         # index of lowest separation is best CB
@@ -105,21 +115,21 @@ def main():
 
     print("Pulsars found:")
     for cb, sep, psr in output[order]:
-        print(f"PSR {psr['NAME']} in CB{cb:02d}, separation from CB centre: {sep:.2f}\'")
+        print(f"PSR {psr['NAME']} in CB{cb:02d}, separation from CB centre: {sep:.2f}\"")
         if args.more_info:
-            for p in params:
+            for p in args.params:
                 # get value and unit
                 value = psr[p]
                 unit = psr.columns[p].unit
                 dtype = psr.columns[p].dtype
                 # format according to dtype
                 if dtype == np.float:
-                    formatted_value = f' {p} = {value:.2f}'
+                    formatted_value = f" {p} = {value:.2f}"
                 else:
-                    formatted_value = f' {p} = {value}'
+                    formatted_value = f" {p} = {value}"
                 # add unit
                 if unit is not None:
-                    formatted_value += f' {unit}'
+                    formatted_value += f" {unit}"
                 # add newline
                 print(formatted_value)
             print()
