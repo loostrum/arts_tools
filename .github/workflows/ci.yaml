@@ -5,9 +5,6 @@ on:
   push:
   pull_request:
     branches: [ master ]
-  release:
-    types:
-      - created
   workflow_dispatch:
 
 jobs:
@@ -37,7 +34,8 @@ jobs:
     runs-on: ubuntu-latest
     # only run when tests succeed on the master branch
     needs: test
-    if: github.ref == 'refs/heads/master'
+    # run on master branch or tags
+    if: github.ref == 'refs/heads/master' or startsWith(github.ref, 'refs/tags')
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -63,8 +61,8 @@ jobs:
   pypi:
     runs-on: ubuntu-latest
     needs: [test, docs]
-    # run on tags of master branch
-    if: startsWith(github.ref, 'refs/tags') && github.ref == 'refs/heads/master'
+    # run on tags
+    if: startsWith(github.ref, 'refs/tags')
     steps:
       - name: Checkout
         uses: actions/checkout@v2
