@@ -29,6 +29,14 @@ arts_tools.fits.fix_file_from_before_20200408
 
 .. automodule:: arts_tools.fits.fix_file_from_before_20200408
 
+IQUV PSRDADA to PSRFITS conversion
+==================================
+
+arts_tools.iquv.psrdada_to_fits
+-------------------------------
+
+.. automodule:: arts_tools.iquv.psrdada_to_fits
+
 General tools
 =============
 
