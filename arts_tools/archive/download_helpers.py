@@ -26,6 +26,13 @@ class DownloadProgressBar(tqdm.tqdm):
     based on https://stackoverflow.com/questions/15644964/python-progress-bar-and-downloads
     """
 
+    def __init__(self, *args, **kwargs):
+        """
+        """
+        # this __init__ is only here to avoid the docstring of tqdm.tdqm's __init__ showing up
+        # in the docs of arts_tools
+        super(DownloadProgressBar, self).__init__(*args, **kwargs)
+
     def update_to(self, nbyte=1, blocksize=1, totalsize=None):
         if totalsize is not None:
             self.total = totalsize

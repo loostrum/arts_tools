@@ -22,6 +22,9 @@ to include the iRODS tools necessary for directly downloading files from the arc
 An overview of the scripts included in this package is given below. Each script has as `-h` option that lists 
 all available options.
 
+For those that prefer using these tools from within Python, an overview of all functions and their usage is available
+at https://loostrum.github.io/arts_tools.
+
 ## Finding known pulsars in the Apertif field-of-view
 To find which pulsars are within the field of a given pointing, run 
 `arts_find_pulsars_in_field --ra hh:mm:ss.s --dec dd:mm:ss.s`. This tool also prints in which 
