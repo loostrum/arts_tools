@@ -72,7 +72,9 @@ jobs:
           python-version: 3.8
           architecture: x64
       - name: Build
-        run: python setup.py sdist bdist_wheel
+        run: |
+          pip install wheel
+          python setup.py sdist bdist_wheel
       - name: Deploy
         uses: pypa/gh-action-pypi-publish@v1.4.1
         with:
