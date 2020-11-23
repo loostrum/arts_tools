@@ -10,6 +10,8 @@ Scripts for handling Apertif Radio Transient System data.
 * astropy
 * psrqpy
 * python-irodsclient (optional)
+* [psrdada-python](https://github.com/TRASAL/psrdada-python) (only for converting raw IQUV data to PSRFITS)
+* [dadafits](https://github.com/TRASAL/dadafits) (only for converting raw IQUV data to PSRFITS)
 
 ## Installation
 `pip install arts_tools`   
@@ -66,3 +68,9 @@ By default, the script appends `_fixed` to the filename. Run `arts_fix_fits_from
 #### Note for Science Verification Campaign data
 Data from the SVC has a correct NAXIS2 value in some cases. However, the other fixes do need to be applied. 
 This can be forced by running `arts_fix_fits_from_before_20200408 --force file.fits`.
+
+## Converting raw IQUV data to PSRFITS
+IQUV data are initially written to disk as-is with PSRDADA's `dada_dbdisk`. To convert these to PSRFITS with `dadafits`, 
+use `arts_psrdada_iquv_to_fits --sb <space-separated synthesised beam list> --output_dir <output directory> <input psrdada file>`.
+Instead of writing synthesised beams, the script can also write all tied-array beams. To do this, specifcy `--tab` instead 
+of `--sb`. Run `arts_psrdada_iquv_to_fits -h` for more options.

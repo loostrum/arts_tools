@@ -7,7 +7,9 @@ import astropy.units as u
 from astropy.coordinates import EarthLocation
 
 #: File with definition of CB offsets
-CB_OFFSETS = 'square_39p1.cb_offsets'
+CB_OFFSETS = 'static/square_39p1.cb_offsets'
+#: File with definition of SBs
+SB_TABLE = 'static/sbtable-sc4-12tabs-71sbs.txt'
 #: CB half-power width
 CB_HPBW = 28.0835088 * u.arcmin  # calculated from CB offsets file
 #: Reference frequency for CB half-power width
@@ -18,6 +20,8 @@ BANDWIDTH = 300 * u.MHz
 NCB = 40
 #: Number of tied-array beams
 NTAB = 12
+#: Number of synthesised beams
+NSB = 71
 
 # WSRT position in ITRF coordinates
 ARRAY_ITRF = np.array([3828630.63486200943589211, 443593.39226634375518188, 5064922.99755000043660402]) * u.meter
