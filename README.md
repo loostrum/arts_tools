@@ -1,7 +1,7 @@
 # ARTS tools
 [![DOI](https://zenodo.org/badge/254329373.svg)](https://zenodo.org/badge/latestdoi/254329373)
 [![PyPI version](https://badge.fury.io/py/arts-tools.svg)](https://badge.fury.io/py/arts-tools)
-![CI](https://github.com/loostrum/arts_tools/workflows/CI/badge.svg)
+![CI](https://github.com/loostrum/arts_tools/workflows/CI/badge.svg)  
 Scripts for handling Apertif Radio Transient System data.
 
 ## Dependencies
