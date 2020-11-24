@@ -73,4 +73,6 @@ This can be forced by running `arts_fix_fits_from_before_20200408 --force file.f
 IQUV data are initially written to disk as-is with PSRDADA's `dada_dbdisk`. To convert these to PSRFITS with `dadafits`, 
 use `arts_psrdada_iquv_to_fits --sb <space-separated synthesised beam list> --output_dir <output directory> <input psrdada file>`.
 Instead of writing synthesised beams, the script can also write all tied-array beams. To do this, specifcy `--tab` instead 
-of `--sb`. Run `arts_psrdada_iquv_to_fits -h` for more options.
+of `--sb`. If `--sb` is the last option before the path to the psrdada files, add `--` like this: 
+`arts_psrdada_iquv_to_fits --sb 35 36 -- input.dada`, otherwise the input files will be added to the SB list and the script will crash.
+Run `arts_psrdada_iquv_to_fits -h` for more options.
