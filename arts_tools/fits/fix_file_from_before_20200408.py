@@ -124,7 +124,7 @@ def fix_header(header, naxis2, force=False):
     # NAXIS2 is zero for a broken header, check if this is indeed the case
     if char != '0':
         if force:
-            logging.warning("Original NAXIS2 is not zero; forcing application of fix")
+            logging.warning("Original NAXIS2 is not 0; forcing application of fix")
             # keep reading until the end of the value is found, indicated by a space
             while char != ' ':
                 ind += 1
@@ -132,7 +132,7 @@ def fix_header(header, naxis2, force=False):
             # subtract one to have value of final character
             ind -= 1
         else:
-            logging.error("Original NAXIS2 is not zero, fits file should be ok already"
+            logging.error("Original NAXIS2 is not zero, fits file should be ok already\n"
                           "Re-run with --force to apply the fix anyway")
             sys.exit(1)
     # ind is now the location of the last character of the value in the header
@@ -279,7 +279,15 @@ def main():
     raw_data, padding, naxis2 = get_data(args.file, hdr_size)
     # fix the header
     header_fixed = fix_header(header, naxis2, args.force)
-    # fix the data
-    data_fixed = fix_data(raw_data, naxis2)
+    # fix the data (if there is a data block)
+    if len(raw_data) > 0:
+        data_fixed = fix_data(raw_data, naxis2)
+    else:
+        data_fixed = None
+
     # write the output file
-    write_file(args.output, header_fixed, data_fixed, padding)
+    if data_fixed is None:
+        # no data; write just the header
+        write_file(args.output, header_fixed)
+    else:
+        write_file(args.output, header_fixed, data_fixed, padding)
