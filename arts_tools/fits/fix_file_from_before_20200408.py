@@ -91,7 +91,7 @@ def get_data(fname, hdr_size):
     data = np.fromfile(fname, dtype='B', count=data_size, offset=hdr_size)
 
     logging.info("Data size: {}  bytes with padding of {} bytes".format(data_size, padding_size))
-    logging.info("NAXIS2: {}".format(naxis2))
+    logging.info("NAXIS2 derived from data: {}".format(naxis2))
     logging.info("Observation duration: {}s".format(naxis2 * TSUBINT))
 
     return data, padding, naxis2
