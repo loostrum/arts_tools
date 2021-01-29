@@ -56,6 +56,8 @@ parset = read_parameterset('/path/to/file.fits')
 Note that all values are read as strings.
 
 ## Fixing archival FITS files
+NOTE: The FITS files have been fixed in the archive itself, there is no need to run this script on downloaded data.
+
 FITS files retrieved from the ALTA from before 2020/04/08 can be made readable with 
 `arts_fix_fits_from_before_20200408 file.fits`. These fixes are applied:
 1. The NAXIS2 value in the header is changed from zero to the correct value
