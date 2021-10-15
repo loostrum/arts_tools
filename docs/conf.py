@@ -18,7 +18,7 @@ from arts_tools import __version__
 # -- Project information -----------------------------------------------------
 
 project = 'ARTS tools'
-copyright = '2020, Leon Oostrum'
+copyright = '2021, Leon Oostrum'
 author = 'Leon Oostrum'
 
 # The full version, including alpha/beta/rc tags
