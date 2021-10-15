@@ -6,8 +6,10 @@ import argparse
 import warnings
 
 import numpy as np
+import matplotlib.pyplot as plt
 import astropy.units as u
 from astropy.coordinates import SkyCoord
+from astropy.visualization.wcsaxes import SphericalCircle
 from psrqpy import QueryATNF
 
 from arts_tools import tools
@@ -26,6 +28,27 @@ def get_half_power_width(freq):
     return hpbw.to(u.arcmin)
 
 
+def make_plot(cb_coord, psr_coord, hpbw):
+    """
+    Create a plot of the CB pattern with pulsar locations
+
+    :param list cb_coord: List of SkyCoord objects with CB pointings
+    :param list psr_coord: List of (name, SkyCoord) tuples with pulsar names and positions
+    :param Quantity hpbw: half-power beam width of the CBs
+    """
+    fig, ax = plt.subplots()
+    # CB positions
+    for cb_idx, cb_pos in enumerate(cb_coord):
+        ax.text(cb_pos.ra.deg, cb_pos.dec.deg, f'{cb_idx:02d}', ha='center', va='center', alpha=.5)
+        patch = SphericalCircle((cb_pos.ra, cb_pos.dec), hpbw, ec='k', fc='none', ls='-', alpha=.5)
+        ax.add_patch(patch)
+    # pulsar positions
+    for name, coord in psr_coord:
+        ax.plot(coord.ra.deg, coord.dec.deg, marker='o', color='red')
+        ax.text(coord.ra.deg + .1, coord.dec.deg, name, va='center', ha='left')
+    plt.show()
+
+
 def main():
     # default parameters to query
     params = ["NAME", "BNAME", "RAJ", "DECJ", "DM", "P0", "S1400"]
@@ -38,7 +61,7 @@ def main():
     parser.add_argument("--dec", required=True, help="Declination of pointing in dd:mm:ss.s format")
     parser.add_argument("--freq", type=float, default=1370,
                         help="Observing frequency (MHz), used to determine size of compound beams. "
-                             "Ignored if max_dist is used."
+                             "If max_dist is used, the frequency is only used for plotting the CBs."
                              "(Default: %(default)s)")
     parser.add_argument("--max_dist", type=float, help="Maximum distance from CB center (arcmin) to be considered "
                                                        "in the CB. (Default: twice half-power width)")
@@ -48,6 +71,7 @@ def main():
     parser.add_argument("--params", nargs="+", default=params,
                         help=f"Space-separated list of pulsar parameters to show "
                              f"when more_info=True. (Default: {' '.join(params)})")
+    parser.add_argument("--plot", action="store_true", help="Plot CB pattern with pulsar locations")
 
     # print help if no arguments are given
     if len(sys.argv) == 1:
@@ -57,8 +81,9 @@ def main():
     args = parser.parse_args()
 
     # set max dist if not given
+    half_power_width = get_half_power_width(args.freq * u.MHz)
     if args.max_dist is None:
-        args.max_dist = 2 * get_half_power_width(args.freq * u.MHz).to(u.arcmin).value
+        args.max_dist = 2 * half_power_width.to(u.arcmin).value
 
     # query ATNF for pulsars in a 4x4 degree FoV, which covers more than the entire Apertif FoV
     bound = [args.ra, args.dec, 4]
@@ -86,6 +111,7 @@ def main():
 
     # check the closest CB for each pulsar
     output = []
+    pulsar_coords = []
     pulsar_found = False
     print("Locating pulsars in Apertif Compound Beams")
     for psr in results.table:
@@ -104,6 +130,7 @@ def main():
         pulsar_found = True
         # store info
         output.append([best_cb, sep, psr])
+        pulsar_coords.append([psr["NAME"], psr_coord])
 
     if not pulsar_found:
         print("No pulsars found")
@@ -133,3 +160,6 @@ def main():
                 # add newline
                 print(formatted_value)
             print()
+
+    if args.plot:
+        make_plot(cb_pointings, pulsar_coords, half_power_width)
