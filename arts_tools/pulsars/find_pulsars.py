@@ -46,6 +46,8 @@ def make_plot(cb_coord, psr_coord, hpbw):
     for name, coord in psr_coord:
         ax.plot(coord.ra.deg, coord.dec.deg, marker='o', color='red')
         ax.text(coord.ra.deg + .1, coord.dec.deg, name, va='center', ha='left')
+    ax.set_xlabel('RA (deg)')
+    ax.set_ylabel('Dec (deg)')
     plt.show()
 
 
