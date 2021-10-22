@@ -144,7 +144,7 @@ def main():
 
     print("Pulsars found:")
     for cb, sep, psr in output[order]:
-        print(f"PSR {psr['NAME']} in CB{cb:02d}, separation from CB centre: {sep:.2f}\"")
+        print(f"PSR {psr['NAME']} in CB{cb:02d}, separation from CB centre: {sep:.2f}'")
         if args.more_info:
             for p in args.params:
                 # get value and unit
