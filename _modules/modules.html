@@ -17,6 +17,7 @@
         <script src="../_static/underscore.js"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -40,24 +41,72 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Pulsar tool</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#module-arts_tools.pulsars.find_pulsars">arts_tools.pulsars.find_pulsars</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-arts_tools.pulsars.find_pulsars">arts_tools.pulsars.find_pulsars</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#arts_tools.pulsars.find_pulsars.get_half_power_width"><code class="docutils literal notranslate"><span class="pre">get_half_power_width()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#arts_tools.pulsars.find_pulsars.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#arts_tools.pulsars.find_pulsars.make_plot"><code class="docutils literal notranslate"><span class="pre">make_plot()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="#alta-downloads">ALTA downloads</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#module-arts_tools.archive.download_from_alta">arts_tools.archive.download_from_alta</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-arts_tools.archive.download_helpers">arts_tools.archive.download_helpers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-arts_tools.archive.download_from_alta">arts_tools.archive.download_from_alta</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#arts_tools.archive.download_from_alta.get_file_paths"><code class="docutils literal notranslate"><span class="pre">get_file_paths()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#arts_tools.archive.download_from_alta.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-arts_tools.archive.download_helpers">arts_tools.archive.download_helpers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#arts_tools.archive.download_helpers.DownloadProgressBar"><code class="docutils literal notranslate"><span class="pre">DownloadProgressBar</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#arts_tools.archive.download_helpers.DownloadProgressBar.update_to"><code class="docutils literal notranslate"><span class="pre">DownloadProgressBar.update_to()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#arts_tools.archive.download_helpers.download_irods"><code class="docutils literal notranslate"><span class="pre">download_irods()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#arts_tools.archive.download_helpers.download_url"><code class="docutils literal notranslate"><span class="pre">download_url()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#arts_tools.archive.download_helpers.format_bytes"><code class="docutils literal notranslate"><span class="pre">format_bytes()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#arts_tools.archive.download_helpers.print_progress"><code class="docutils literal notranslate"><span class="pre">print_progress()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="#fits-file-handling">FITS file handling</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#module-arts_tools.fits.reader">arts_tools.fits.reader</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-arts_tools.fits.fix_file_from_before_20200408">arts_tools.fits.fix_file_from_before_20200408</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-arts_tools.fits.reader">arts_tools.fits.reader</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#arts_tools.fits.reader.read_header"><code class="docutils literal notranslate"><span class="pre">read_header()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#arts_tools.fits.reader.read_parameterset"><code class="docutils literal notranslate"><span class="pre">read_parameterset()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-arts_tools.fits.fix_file_from_before_20200408">arts_tools.fits.fix_file_from_before_20200408</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#arts_tools.fits.fix_file_from_before_20200408.ALIGN"><code class="docutils literal notranslate"><span class="pre">ALIGN</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#arts_tools.fits.fix_file_from_before_20200408.NAXIS1"><code class="docutils literal notranslate"><span class="pre">NAXIS1</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#arts_tools.fits.fix_file_from_before_20200408.NCHAN"><code class="docutils literal notranslate"><span class="pre">NCHAN</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#arts_tools.fits.fix_file_from_before_20200408.NSAMP"><code class="docutils literal notranslate"><span class="pre">NSAMP</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#arts_tools.fits.fix_file_from_before_20200408.TSUBINT"><code class="docutils literal notranslate"><span class="pre">TSUBINT</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#arts_tools.fits.fix_file_from_before_20200408.fix_data"><code class="docutils literal notranslate"><span class="pre">fix_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#arts_tools.fits.fix_file_from_before_20200408.fix_header"><code class="docutils literal notranslate"><span class="pre">fix_header()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#arts_tools.fits.fix_file_from_before_20200408.get_data"><code class="docutils literal notranslate"><span class="pre">get_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#arts_tools.fits.fix_file_from_before_20200408.get_header"><code class="docutils literal notranslate"><span class="pre">get_header()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#arts_tools.fits.fix_file_from_before_20200408.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#arts_tools.fits.fix_file_from_before_20200408.write_file"><code class="docutils literal notranslate"><span class="pre">write_file()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="#iquv-psrdada-to-psrfits-conversion">IQUV PSRDADA to PSRFITS conversion</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#arts-tools-iquv-psrdada-to-fits">arts_tools.iquv.psrdada_to_fits</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="#module-arts_tools.tools">General tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#module-arts_tools.tools">General tools</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#arts_tools.tools.altaz_to_hadec"><code class="docutils literal notranslate"><span class="pre">altaz_to_hadec()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#arts_tools.tools.cb_index_to_pointing"><code class="docutils literal notranslate"><span class="pre">cb_index_to_pointing()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#arts_tools.tools.coord_to_offset"><code class="docutils literal notranslate"><span class="pre">coord_to_offset()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#arts_tools.tools.hadec_to_altaz"><code class="docutils literal notranslate"><span class="pre">hadec_to_altaz()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#arts_tools.tools.hadec_to_par"><code class="docutils literal notranslate"><span class="pre">hadec_to_par()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#arts_tools.tools.hadec_to_proj"><code class="docutils literal notranslate"><span class="pre">hadec_to_proj()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#arts_tools.tools.hadec_to_radec"><code class="docutils literal notranslate"><span class="pre">hadec_to_radec()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#arts_tools.tools.limit"><code class="docutils literal notranslate"><span class="pre">limit()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#arts_tools.tools.offset_to_coord"><code class="docutils literal notranslate"><span class="pre">offset_to_coord()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#arts_tools.tools.radec_to_hadec"><code class="docutils literal notranslate"><span class="pre">radec_to_hadec()</span></code></a></li>
+</ul>
+</li>
 </ul>
 
         </div>
@@ -73,8 +122,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Pulsar tool</li>
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Pulsar tool</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/_modules/modules.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -529,7 +578,7 @@ phi is offset in Dec or Alt</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="arts_tools.tools.limit">
-<span class="sig-prename descclassname"><span class="pre">arts_tools.tools.</span></span><span class="sig-name descname"><span class="pre">limit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#arts_tools.tools.limit" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">arts_tools.tools.</span></span><span class="sig-name descname"><span class="pre">limit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#arts_tools.tools.limit" title="Permalink to this definition"></a></dt>
 <dd><p>Where val &gt; maxval, replace by maxval</p>
 <p>Where val &lt; minval, replace by minval</p>
 <dl class="field-list simple">
